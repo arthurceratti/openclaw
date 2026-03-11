@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: frontend:latest
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - API_URL=http://backend:5000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: backend:latest
+    container_name: backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/student_db
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+    command: >
+      node app.js
+    depends_on:
+      - database
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Database Service
+  database:
+    image: postgres:15-alpine
+    container_name: database
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=student_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:

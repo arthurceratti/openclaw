@@ -1,0 +1,1 @@
+00 7:30 * * * /data/.openclaw/workspace/rotina-briefing.sh >> /data/.openclaw/workspace/cron-briefing.log 2>&1

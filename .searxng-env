@@ -1,0 +1,10 @@
+# SearXNG Environment Configuration
+# Add this line to your shell's .bashrc or .zshrc:
+export SEARXNG_URL="http://192.168.0.14:8088"
+
+# To use this skill, source this file before running search commands:
+# source /data/.openclaw/workspace/.searxng-env
+
+# Or add to your .bashrc:
+# echo 'export SEARXNG_URL="http://192.168.0.14:8088"' >> ~/.bashrc
+# source ~/.bashrc

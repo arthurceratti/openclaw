@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "skills": {
+    "self-improving-agent": {
+      "version": "3.0.1",
+      "installedAt": 1773454870085
+    },
+    "Searxng": {
+      "version": "1.0.3",
+      "installedAt": 1773455720576
+    },
+    "jira-openclaw": {
+      "version": "1.0.0",
+      "installedAt": 1773665106942
+    },
+    "web-search-exa": {
+      "version": "2.0.0",
+      "installedAt": 1773873173364
+    },
+    "clawddocs": {
+      "version": "1.2.2",
+      "installedAt": 1773873303211
+    },
+    "find-skills": {
+      "version": "0.1.0",
+      "installedAt": 1773873475115
+    },
+    "skill-vetter": {
+      "version": "1.0.0",
+      "installedAt": 1773873562362
+    },
+    "proactive-agent": {
+      "version": "3.1.0",
+      "installedAt": 1773873692882
+    },
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1773873800050
+    },
+    "auto-updater": {
+      "version": "1.0.0",
+      "installedAt": 1773873925260
+    },
+    "superdesign": {
+      "version": "1.0.0",
+      "installedAt": 1773965947243
+    }
+  }
+}

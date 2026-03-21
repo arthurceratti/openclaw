@@ -51,7 +51,7 @@ Last updated: 2026-03-20 16:28 GMT-3
 ## Plataforma de Ensino por IA - Progresso ✅
 
 ### Status Atual
-**Tarefas Concluídas:** 8 de 34 ✅
+**Tarefas Concluídas:** 10 de 34 ✅
 
 ### Tarefas Concluídas ✅:
 1. KAN-3 - Criar estrutura de diretório Node.js ✅
@@ -62,82 +62,81 @@ Last updated: 2026-03-20 16:28 GMT-3
 6. KAN-23 - Criar schema de banco de dados ✅
 7. KAN-29 - Configurar containerização Docker ✅ **COMPLETADO**
 8. KAN-28 - Configurar pipeline CI/CD ✅ **COMPLETADO**
+9. KAN-6 - Criar controllers de negócio ✅ **COMPLETADO**
+10. KAN-7 - Criar serviços de dados ✅ **COMPLETADO**
 
-### 📦 KAN-28 - Pipeline CI/CD Concluído ✅
+### 📦 KAN-7 - Serviços de Dados Concluído ✅
 
 **Arquivos Criados:**
-- ✅ `.github/workflows/ci.yml` - Pipeline de CI completo
-- ✅ `.github/workflows/cd.yml` - Pipeline de CD com deploy de containers
+- ✅ `backend/services/authService.js` - Serviço de autenticação
+- ✅ `backend/services/userService.js` - Serviço de usuários
+- ✅ `backend/services/courseService.js` - Serviço de cursos
+- ✅ `backend/services/studentService.js` - Serviço de estudantes
+- ✅ `backend/services/assignmentService.js` - Serviço de atividades
 
 **Funcionalidades Implementadas:**
 
-**CI (Continuous Integration):**
-- ✅ Build automático do backend (Node.js)
-- ✅ Build automático do frontend (React + Vite)
-- ✅ Testes automáticos para backend
-- ✅ Linting e code quality checks
-- ✅ Upload de coverage report para Codecov
+**Serviços de Negócio:**
+- ✅ CRUD completo para estudantes
+- ✅ CRUD completo para atividades
+- ✅ CRUD para usuários
+- ✅ CRUD para cursos
+- ✅ CRUD para autenticação
+- ✅ Submissão de atividades
+- ✅ Verificação de progresso do estudante
+- ✅ Hash de senhas
+- ✅ Validação de dados
 
-**CD (Continuous Deployment):**
-- ✅ Build e push de Docker images para registry
-- ✅ Deploy automático para staging environment
-- ✅ Deploy para produção (apenas com tags de versão)
-- ✅ Upload de artifacts do build
+**GitHub Actions:**
+- ✅ Commit e push para repositório GitHub
+- ✅ Atualização deMEMORY.md com status
 
-**GitHub Actions Workflow:**
-- ✅ Triggered on push e pull request
-- ✅ Parallel jobs para backend e frontend
-- ✅ Upload de artifacts para deploy
-- ✅ Deploy automático para staging em cada push
-- ✅ Deploy para produção apenas em releases tagged
+### 📋 Fila de Tarefas Pendentes (24)
+1. KAN-8 - Implementar middleware de autenticação
+2. KAN-9 - Criar routes de API
+3. KAN-10 - Criar módulos de utilitários
+4. KAN-11 - Escrever testes unitários
+5. KAN-12 - Escrever testes de integração
+6. KAN-13 - Configurar CI/CD para Node.js
+7. KAN-14 - Configurar containerização Node.js
+8. KAN-17 - Configurar testes para React
+9. KAN-18 - Criar components reutilizáveis
+10. KAN-19 - Implementar hooks de estado
+11. KAN-20 - Criar páginas principais
+12. KAN-21 - Escrever testes de componentes React
+13. KAN-24 - Criar migrações de schema
+14. KAN-25 - Criar stored procedures
+15. KAN-26 - Criar triggers e constraints
+16. KAN-27 - Escrever testes de queries SQL
+17. KAN-30 - Configurar ambiente de produção
+18. KAN-31 - Configurar monitoring e logging
+19. KAN-32 - Configurar backup de banco de dados
+20. KAN-33 - Criar scripts de deploy
+21. KAN-34 - Configurar environment variables
+22. KAN-35 - Configurar health checks
+23. KAN-14 - Configurar containerização Node.js
 
-### 📋 Fila de Tarefas Pendentes (26)
-1. KAN-6 - Criar controllers de negócio
-2. KAN-7 - Criar serviços de dados
-3. KAN-8 - Implementar middleware de autenticação
-4. KAN-9 - Criar routes de API
-5. KAN-10 - Criar módulos de utilitários
-6. KAN-11 - Escrever testes unitários
-7. KAN-12 - Escrever testes de integração
-8. KAN-13 - Configurar CI/CD para Node.js
-9. KAN-14 - Configurar containerização Node.js
-10. KAN-17 - Configurar testes para React
-11. KAN-18 - Criar components reutilizáveis
-12. KAN-19 - Implementar hooks de estado
-13. KAN-20 - Criar páginas principais
-14. KAN-21 - Escrever testes de componentes React
-15. KAN-24 - Criar migrações de schema
-16. KAN-25 - Criar stored procedures
-17. KAN-26 - Criar triggers e constraints
-18. KAN-27 - Escrever testes de queries SQL
-19. KAN-30 - Configurar ambiente de produção
-20. KAN-31 - Configurar monitoring e logging
-21. KAN-32 - Configurar backup de banco de dados
-22. KAN-33 - Criar scripts de deploy
-23. KAN-34 - Configurar environment variables
-24. KAN-35 - Configurar health checks
+### 🎉 PRÓXIMA TAREFA: KAN-8
+**Tarefa:** Implementar middleware de autenticação
 
-### 🎉 PRÓXIMA TAREFA: KAN-6
-**Tarefa:** Criar controllers de negócio
-
-**Descrição:** Criar controllers para lidar com as requisições HTTP e chamar os serviços de negócio apropriados.
+**Descrição:** Implementar middleware de autenticação JWT para proteger routes e endpoints da API.
 
 **Arquivos a criar:**
-- `backend/controllers/` - Pasta de controllers
-- `backend/controllers/userController.js` - Controller de usuários
-- `backend/controllers/courseController.js` - Controller de cursos
-- `backend/controllers/studentController.js` - Controller de estudantes
-- `backend/controllers/authController.js` - Controller de autenticação
-- `backend/controllers/assignmentController.js` - Controller de atividades
+- `backend/middleware/auth.js` - Middleware de autenticação JWT
+- `backend/middleware/validate.js` - Middleware de validação
+- `backend/middleware/errorHandler.js` - Middleware de tratamento de erros
+- `backend/middleware/cors.js` - Middleware de CORS
 
 **Comandos a executar:**
 - git pull (para estar atualizado)
-- Criar estrutura de controllers
-- Implementar lógica de negócio
-- git commit -m "KAN-6: Criar controllers de negócio"
+- Criar estrutura de middleware
+- Implementar autenticação JWT
+- Implementar validação de dados
+- Implementar tratamento de erros
+- git commit -m "KAN-8: Implementar middleware de autenticação"
 - git push origin main
 
 Deseja que eu inicie a implementação da próxima tarefa? 🚀
 
 ---
-Last updated: 2026-03-20 16:28 GMT-3
+Last updated: 2026-03-21 01:42 GMT-3

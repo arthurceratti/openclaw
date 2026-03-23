@@ -1,0 +1,80 @@
+name: Deploy React Frontend
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment Environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+env:
+  NODE_VERSION: '18.x'
+  REACT_APP_API_URL: '${{ secrets.REACT_APP_API_URL }}'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Build for production
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: react-build
+          path: frontend/build
+
+  deploy-staging:
+    needs: build
+    if: github.event.inputs.environment == 'staging' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: react-build
+
+      - name: Deploy to staging
+        run: |
+          echo "Deploying to staging environment..."
+          # Replace with actual deployment command
+          echo "Staging deployment successful"
+
+  deploy-production:
+    needs: build
+    if: github.event.inputs.environment == 'production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: react-build
+
+      - name: Deploy to production
+        run: |
+          echo "Deploying to production environment..."
+          # Replace with actual deployment command
+          echo "Production deployment successful"

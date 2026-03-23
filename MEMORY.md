@@ -59,7 +59,7 @@
 13. KAN-10 - Criar módulos de utilitários ✅
 14. KAN-11 - Criar componentes React ✅
 
-### 📦 KAN-11 - Componentes React Concluído ✅
+### 📦 KAN-12 - Hooks de Estado Concluído ✅
 
 **Arquivos Criados:**
 - ✅ `frontend/src/components/Header.js` - Header component com user info e logout
@@ -103,29 +103,45 @@
 - Header, Sidebar, and content area
 - Welcome message placeholder
 
-### 📋 Fila de Tarefas Pendentes (21)
+### 📋 Fila de Tarefas Pendentes (20)
+
+### 🎯 PRÓXIMA TAREFA: KAN-13
+**Tarefa:** Configurar CI/CD para React
+
+**Descrição:** Configurar pipelines de CI/CD para o frontend React.
+
+**Arquivos a criar:**
+- `frontend/.github/workflows/deploy.yml` - Pipeline de deploy automático
+- `frontend/.github/workflows/test.yml` - Pipeline de testes automatizados
+
+**Comandos a executar:**
+- git pull (para estar atualizado)
+- Criar estrutura .github/workflows
+- Implementar pipeline de deploy e testes
+- git commit -m "KAN-13: Configurar CI/CD para React"
+- git push origin main
 **EXCLUINDO TESTES (KAN-12, KAN-17, KAN-21, KAN-27, KAN-36, KAN-37, KAN-38):**
-1. KAN-12 - Implementar hooks de estado
-2. KAN-13 - Configurar CI/CD para React
-3. KAN-14 - Configurar containerização React
-4. KAN-17 - Criar context providers
-5. KAN-18 - Criar páginas principais
-6. KAN-19 - Criar estilos globais
-7. KAN-20 - Configurar ambiente de produção
-8. KAN-21 - Configurar monitoring e logging
-9. KAN-24 - Criar migrações de schema
-10. KAN-25 - Criar stored procedures
-11. KAN-26 - Criar triggers e constraints
-12. KAN-30 - Configurar ambiente de produção
-13. KAN-31 - Configurar backup de banco de dados
-14. KAN-32 - Criar scripts de deploy
-15. KAN-33 - Configurar environment variables
-16. KAN-34 - Configurar health checks
-17. KAN-35 - Configurar error handling
-18. KAN-36 - Criar testes unitários backend
-19. KAN-37 - Criar testes unitários frontend
-20. KAN-38 - Criar testes de integração
-21. KAN-39 - Configurar deploy automático
+3. KAN-13 - Configurar CI/CD para React
+3. KAN-13 - Configurar CI/CD para React
+4. KAN-14 - Configurar containerização React
+5. KAN-17 - Criar context providers
+6. KAN-18 - Criar páginas principais
+7. KAN-19 - Criar estilos globais
+8. KAN-20 - Configurar ambiente de produção
+9. KAN-21 - Configurar monitoring e logging
+10. KAN-24 - Criar migrações de schema
+11. KAN-25 - Criar stored procedures
+12. KAN-26 - Criar triggers e constraints
+13. KAN-30 - Configurar ambiente de produção
+14. KAN-31 - Configurar backup de banco de dados
+15. KAN-32 - Criar scripts de deploy
+16. KAN-33 - Configurar environment variables
+17. KAN-34 - Configurar health checks
+18. KAN-35 - Configurar error handling
+19. KAN-36 - Criar testes unitários backend
+20. KAN-37 - Criar testes unitários frontend
+21. KAN-38 - Criar testes de integração
+22. KAN-39 - Configurar deploy automático
 
 ## Notes
 - OAuth setup required using Google OAuth 2.0 Playground due to browserless environment
@@ -135,4 +151,57 @@
 - MEMORY.md should only be loaded in direct chats with Arthur, not in shared contexts
 
 ---
-Last updated: 2026-03-23 20:35 UTC
+Last updated: 2026-03-23 20:40 UTC
+
+### 📦 KAN-12 - Hooks de Estado Concluído ✅
+
+**Arquivos Criados:**
+- ✅ `frontend/src/hooks/useAuth.js` - Hook de autenticação com login, logout e estado do usuário
+- ✅ `frontend/src/hooks/useCourses.js` - Hook de cursos com fetch, filtro por categoria e refresh
+- ✅ `frontend/src/hooks/useStudents.js` - Hook de alunos com fetch, busca por ID e refresh
+- ✅ `frontend/src/hooks/useAssignments.js` - Hook de atividades com filtro por status e atividades futuras
+- ✅ `frontend/src/hooks/useTheme.js` - Hook de tema com light/dark mode e persistência
+- ✅ `frontend/src/hooks/useNotifications.js` - Hook de notificações com toast messages
+- ✅ `frontend/src/hooks/useLocalStorage.js` - Hook de localStorage com sync entre tabs
+
+**Funcionalidades Implementadas:**
+
+**useAuth:**
+- Estado do usuário logado
+- Login async com email/password
+- Logout com limpeza do estado
+- Loading e error states
+
+**useCourses:**
+- Fetch inicial de cursos
+- Filtro por categoria (all, tech, design, etc.)
+- Método refresh para re-fetch
+- Loading e error states
+
+**useStudents:**
+- Fetch inicial de lista de alunos
+- Busca de aluno por ID
+- Loading e error states
+
+**useAssignments:**
+- Fetch inicial de atividades
+- Filtro por status (pending, completed, overdue)
+- Métodos para atividades futuras e por status
+- Loading e error states
+
+**useTheme:**
+- Toggle light/dark mode
+- Persistência em localStorage
+- CSS classes para dark mode
+- Paleta de cores para ambos os temas
+
+**useNotifications:**
+- 4 tipos de toast: success, error, info, warning
+- Auto-dismiss com duration configurável
+- API simples para mostrar notificações
+
+**useLocalStorage:**
+- Persistência de estado entre sessões
+- Sync automático entre abas
+- Tratamento de erros de JSON parse
+- Valor inicial por padrão

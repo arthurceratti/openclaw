@@ -109,5 +109,24 @@
 - Logging: debug
 - Segurança: strict_mode false, enable_csp false
 
+### 📋 Fila de Tarefas Pendentes (18)
+
+### 🎯 PRÓXIMA TAREFA: KAN-21
+**Tarefa:** Configurar monitoring e logging
+
+**Descrição:** Configurar monitoring e logging para frontend e backend.
+
+**Arquivos a criar:**
+- `frontend/src/config/logger.js` - Configuração de logging
+- `frontend/src/config/metrics.js` - Métricas de monitoramento
+- `backend/src/config/logger.js` - Logging do backend
+- `backend/src/config/metrics.js` - Métricas do backend
+
+**Comandos a executar:**
+- git pull (para estar atualizado)
+- Criar arquivos de logging e métricas
+- git commit -m "KAN-21: Configurar monitoring e logging"
+- git push origin main
+
 ---
 Last updated: 2026-03-24 21:34 UTC

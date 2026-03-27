@@ -7,7 +7,7 @@
   "agentState": {
     "current_agent": "none",
     "status": "idle",
-    "last_execution_time": "2026-03-24T17:58:00Z",
+    "last_execution_time": "2026-03-27T14:29:27Z",
     "gpu_locked": false,
     "timeout_minutes": 5,
     "min_interval_minutes": 90

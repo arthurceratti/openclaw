@@ -41,7 +41,7 @@
 ## Project Progress - Plataforma de Ensino por IA ✅
 
 ### Status Atual
-**Tarefas Concluídas:** 32 de 34 ✅
+**Tarefas Concluídas:** 33 de 34 ✅
 **Tarefas em Progresso:** 1
 
 ### Tarefas Concluídas ✅:
@@ -76,30 +76,24 @@
 29. KAN-30 - Criar testes de integração ✅
 30. KAN-31 - Criar testes E2E ✅
 31. KAN-32 - Criar testes de performance ✅
+32. KAN-34 - Configurar environment variables para deployment ✅
 
-### 📋 Fila de Tarefas Pendentes (2)
+### 📋 Fila de Tarefas Pendentes (1)
 
-### 🎯 KAN-33 - Documentação de API
-**Status:** Pendente
-**Descrição:** Criar documentação de API para backend
+### 🎯 PRÓXIMA TAREFA: KAN-33
+**Tarefa:** Criar documentação de API
+
+**Descrição:** Criar documentação de API para backend.
+
 **Arquivos a criar:**
-- `backend/API_DOCS.md` - Documentação geral da API
-- `backend/API_V1.md` - Documentação detalhada por endpoint
-
-### 🎯 KAN-34 - Deployment
-**Status:** Em Progresso (sub-agente executando)
-**Descrição:** Configurar environment variables para deployment
-
-**Regras do projeto aplicadas:**
-✅ Verificar diretório do projeto
-✅ Atualizar repositório Git
-✅ Enviar tarefa para sub-agente Severino
+- `backend/API_DOCS.md`
+- `backend/API_V1.md`
 
 **Comandos a executar:**
 - git pull (para estar atualizado)
-- Configurar environment variables
-- git commit -m "KAN-34: Configurar environment variables"
+- Criar arquivos de documentação de API
+- git commit -m "KAN-33: Criar documentação de API"
 - git push origin main
 
 ---
-Last updated: 2026-03-28T14:08:00Z
+Last updated: 2026-03-28T19:52:00Z

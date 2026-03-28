@@ -1,10 +1,23 @@
-# API V1 - Documentação Detalhada
+# API V1 - Documentação Detalhada por Endpoint
+
+**Versão:** 1.0.0  
+**Última Atualização:** 2026-03-28  
+**Base URL:** `http://localhost:3001`
+
+---
 
 ## Endpoint: /auth
+
+Autenticação e gerenciamento de sessões JWT.
 
 ### POST /auth/login
 
 Autenticar usuário e receber JWT token.
+
+**Request:**
+- **Method:** POST
+- **Content-Type:** application/json
+- **Path:** `/auth/login`
 
 **Body:**
 ```json
@@ -14,15 +27,19 @@ Autenticar usuário e receber JWT token.
 }
 ```
 
-**Response:**
+**Response (200 OK):**
 ```json
 {
-  "token": "string",
-  "user": {
-    "id": "number",
-    "email": "string",
-    "name": "string"
-  }
+  "success": true,
+  "data": {
+    "token": "string",
+    "user": {
+      "id": "number",
+      "email": "string",
+      "name": "string"
+    }
+  },
+  "message": "Login realizado com sucesso"
 }
 ```
 
@@ -37,6 +54,11 @@ Autenticar usuário e receber JWT token.
 
 Registrar novo usuário.
 
+**Request:**
+- **Method:** POST
+- **Content-Type:** application/json
+- **Path:** `/auth/register`
+
 **Body:**
 ```json
 {
@@ -46,21 +68,26 @@ Registrar novo usuário.
 }
 ```
 
-**Response:**
+**Response (201 Created):**
 ```json
 {
-  "token": "string",
-  "user": {
-    "id": "number",
-    "email": "string",
-    "name": "string"
-  }
+  "success": true,
+  "data": {
+    "token": "string",
+    "user": {
+      "id": "number",
+      "email": "string",
+      "name": "string"
+    }
+  },
+  "message": "Usuário registrado com sucesso"
 }
 ```
 
 **Status Codes:**
 - 201: Usuário criado com sucesso
 - 400: Email já cadastrado ou dados inválidos
+- 409: Email duplicado
 
 ---
 
@@ -68,9 +95,15 @@ Registrar novo usuário.
 
 Deslogar usuário e invalidar token.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/auth/logout`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
+  "success": true,
   "message": "Usuário deslogado com sucesso"
 }
 ```
@@ -85,10 +118,19 @@ Deslogar usuário e invalidar token.
 
 Renovar JWT token expirado.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/auth/refresh`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "token": "string"
+  "success": true,
+  "data": {
+    "token": "string"
+  },
+  "message": "Token renovado com sucesso"
 }
 ```
 
@@ -100,24 +142,43 @@ Renovar JWT token expirado.
 
 ## Endpoint: /users
 
+Gerenciamento de usuários.
+
 ### GET /users
 
 Listar todos os usuários.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/users`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Query:** `?page=1&limit=10` (opcional)
+
+**Response (200 OK):**
 ```json
-[
-  {
-    "id": "number",
-    "email": "string",
-    "name": "string"
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "email": "string",
+      "name": "string",
+      "createdAt": "string"
+    }
+  ],
+  "message": "Lista de usuários retornada",
+  "pagination": {
+    "page": "number",
+    "limit": "number",
+    "total": "number"
   }
-]
+}
 ```
 
 **Status Codes:**
 - 200: Lista de usuários
 - 401: Não autenticado
+- 403: Permissão negada
 
 ---
 
@@ -125,13 +186,23 @@ Listar todos os usuários.
 
 Obter detalhes de um usuário específico.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/users/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "email": "string",
-  "name": "string",
-  "createdAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "email": "string",
+    "name": "string",
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "message": "Usuário encontrado"
 }
 ```
 
@@ -146,6 +217,12 @@ Obter detalhes de um usuário específico.
 
 Atualizar usuário.
 
+**Request:**
+- **Method:** PUT
+- **Path:** `/users/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -153,12 +230,18 @@ Atualizar usuário.
 }
 ```
 
-**Response:**
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "email": "string",
-  "name": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "email": "string",
+    "name": "string",
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "message": "Usuário atualizado com sucesso"
 }
 ```
 
@@ -174,9 +257,15 @@ Atualizar usuário.
 
 Excluir usuário.
 
-**Response:**
+**Request:**
+- **Method:** DELETE
+- **Path:** `/users/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
+  "success": true,
   "message": "Usuário excluído com sucesso"
 }
 ```
@@ -192,12 +281,22 @@ Excluir usuário.
 
 Obter perfil do usuário atual.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/users/profile`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "email": "string",
-  "name": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "email": "string",
+    "name": "string",
+    "role": "string"
+  },
+  "message": "Perfil do usuário encontrado"
 }
 ```
 
@@ -211,6 +310,12 @@ Obter perfil do usuário atual.
 
 Atualizar perfil do usuário atual.
 
+**Request:**
+- **Method:** PUT
+- **Path:** `/users/profile`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -218,12 +323,17 @@ Atualizar perfil do usuário atual.
 }
 ```
 
-**Response:**
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "email": "string",
-  "name": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "email": "string",
+    "name": "string",
+    "role": "string"
+  },
+  "message": "Perfil atualizado com sucesso"
 }
 ```
 
@@ -238,9 +348,15 @@ Atualizar perfil do usuário atual.
 
 Excluir conta do usuário atual.
 
-**Response:**
+**Request:**
+- **Method:** DELETE
+- **Path:** `/users/account`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
+  "success": true,
   "message": "Conta excluída com sucesso"
 }
 ```
@@ -253,21 +369,38 @@ Excluir conta do usuário atual.
 
 ## Endpoint: /courses
 
+Gerenciamento de cursos.
+
 ### GET /courses
 
 Listar todos os cursos.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/courses`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Query:** `?page=1&limit=10` (opcional)
+
+**Response (200 OK):**
 ```json
-[
-  {
-    "id": "number",
-    "name": "string",
-    "description": "string",
-    "duration": "number",
-    "createdAt": "string"
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "name": "string",
+      "description": "string",
+      "duration": "number",
+      "createdAt": "string"
+    }
+  ],
+  "message": "Lista de cursos retornada",
+  "pagination": {
+    "page": "number",
+    "limit": "number",
+    "total": "number"
   }
-]
+}
 ```
 
 **Status Codes:**
@@ -280,14 +413,24 @@ Listar todos os cursos.
 
 Obter detalhes de um curso específico.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/courses/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "name": "string",
-  "description": "string",
-  "duration": "number",
-  "createdAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "description": "string",
+    "duration": "number",
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "message": "Curso encontrado"
 }
 ```
 
@@ -302,6 +445,12 @@ Obter detalhes de um curso específico.
 
 Criar novo curso.
 
+**Request:**
+- **Method:** POST
+- **Path:** `/courses`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -311,14 +460,18 @@ Criar novo curso.
 }
 ```
 
-**Response:**
+**Response (201 Created):**
 ```json
 {
-  "id": "number",
-  "name": "string",
-  "description": "string",
-  "duration": "number",
-  "createdAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "description": "string",
+    "duration": "number",
+    "createdAt": "string"
+  },
+  "message": "Curso criado com sucesso"
 }
 ```
 
@@ -333,6 +486,12 @@ Criar novo curso.
 
 Atualizar curso.
 
+**Request:**
+- **Method:** PUT
+- **Path:** `/courses/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -342,13 +501,19 @@ Atualizar curso.
 }
 ```
 
-**Response:**
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "name": "string",
-  "description": "string",
-  "duration": "number"
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "description": "string",
+    "duration": "number",
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "message": "Curso atualizado com sucesso"
 }
 ```
 
@@ -364,9 +529,15 @@ Atualizar curso.
 
 Excluir curso.
 
-**Response:**
+**Request:**
+- **Method:** DELETE
+- **Path:** `/courses/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
+  "success": true,
   "message": "Curso excluído com sucesso"
 }
 ```
@@ -382,15 +553,31 @@ Excluir curso.
 
 Listar turmas de um curso.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/courses/:courseId/classes`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Query:** `?page=1&limit=10` (opcional)
+
+**Response (200 OK):**
 ```json
-[
-  {
-    "id": "number",
-    "name": "string",
-    "courseId": "number"
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "name": "string",
+      "courseId": "number",
+      "createdAt": "string"
+    }
+  ],
+  "message": "Lista de turmas retornada",
+  "pagination": {
+    "page": "number",
+    "limit": "number",
+    "total": "number"
   }
-]
+}
 ```
 
 **Status Codes:**
@@ -404,12 +591,22 @@ Listar turmas de um curso.
 
 Obter detalhes de uma turma específica.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/courses/:courseId/classes/:classId`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "name": "string",
-  "courseId": "number"
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "courseId": "number",
+    "createdAt": "string"
+  },
+  "message": "Turma encontrada"
 }
 ```
 
@@ -422,20 +619,37 @@ Obter detalhes de uma turma específica.
 
 ## Endpoint: /students
 
+Gerenciamento de estudantes e matrículas.
+
 ### GET /students
 
 Listar todos os estudantes.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/students`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Query:** `?page=1&limit=10&courseId=N` (opcional)
+
+**Response (200 OK):**
 ```json
-[
-  {
-    "id": "number",
-    "name": "string",
-    "email": "string",
-    "createdAt": "string"
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "name": "string",
+      "email": "string",
+      "createdAt": "string"
+    }
+  ],
+  "message": "Lista de estudantes retornada",
+  "pagination": {
+    "page": "number",
+    "limit": "number",
+    "total": "number"
   }
-]
+}
 ```
 
 **Status Codes:**
@@ -448,13 +662,23 @@ Listar todos os estudantes.
 
 Obter detalhes de um estudante específico.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/students/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "name": "string",
-  "email": "string",
-  "createdAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "email": "string",
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "message": "Estudante encontrado"
 }
 ```
 
@@ -469,6 +693,12 @@ Obter detalhes de um estudante específico.
 
 Criar novo estudante.
 
+**Request:**
+- **Method:** POST
+- **Path:** `/students`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -477,13 +707,17 @@ Criar novo estudante.
 }
 ```
 
-**Response:**
+**Response (201 Created):**
 ```json
 {
-  "id": "number",
-  "name": "string",
-  "email": "string",
-  "createdAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "email": "string",
+    "createdAt": "string"
+  },
+  "message": "Estudante criado com sucesso"
 }
 ```
 
@@ -498,6 +732,12 @@ Criar novo estudante.
 
 Atualizar estudante.
 
+**Request:**
+- **Method:** PUT
+- **Path:** `/students/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -506,12 +746,18 @@ Atualizar estudante.
 }
 ```
 
-**Response:**
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "name": "string",
-  "email": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "email": "string",
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "message": "Estudante atualizado com sucesso"
 }
 ```
 
@@ -527,9 +773,15 @@ Atualizar estudante.
 
 Excluir estudante.
 
-**Response:**
+**Request:**
+- **Method:** DELETE
+- **Path:** `/students/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
+  "success": true,
   "message": "Estudante excluído com sucesso"
 }
 ```
@@ -545,16 +797,31 @@ Excluir estudante.
 
 Listar matrículas de um estudante.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/students/:studentId/enrollments`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Query:** `?page=1&limit=10` (opcional)
+
+**Response (200 OK):**
 ```json
-[
-  {
-    "id": "number",
-    "studentId": "number",
-    "courseId": "number",
-    "createdAt": "string"
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "studentId": "number",
+      "courseId": "number",
+      "createdAt": "string"
+    }
+  ],
+  "message": "Lista de matrículas retornada",
+  "pagination": {
+    "page": "number",
+    "limit": "number",
+    "total": "number"
   }
-]
+}
 ```
 
 **Status Codes:**
@@ -568,13 +835,22 @@ Listar matrículas de um estudante.
 
 Obter matrícula específica de um estudante.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/students/:studentId/enrollments/:courseId`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "studentId": "number",
-  "courseId": "number",
-  "createdAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "studentId": "number",
+    "courseId": "number",
+    "createdAt": "string"
+  },
+  "message": "Matrícula encontrada"
 }
 ```
 
@@ -589,6 +865,12 @@ Obter matrícula específica de um estudante.
 
 Matricular estudante em curso.
 
+**Request:**
+- **Method:** POST
+- **Path:** `/students/enroll`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -597,9 +879,10 @@ Matricular estudante em curso.
 }
 ```
 
-**Response:**
+**Response (200 OK):**
 ```json
 {
+  "success": true,
   "message": "Estudante matriculado com sucesso"
 }
 ```
@@ -613,21 +896,38 @@ Matricular estudante em curso.
 
 ## Endpoint: /assignments
 
+Gerenciamento de atividades e entregas.
+
 ### GET /assignments
 
 Listar todas as atividades.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/assignments`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Query:** `?page=1&limit=10` (opcional)
+
+**Response (200 OK):**
 ```json
-[
-  {
-    "id": "number",
-    "title": "string",
-    "description": "string",
-    "courseId": "number",
-    "createdAt": "string"
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "title": "string",
+      "description": "string",
+      "courseId": "number",
+      "createdAt": "string"
+    }
+  ],
+  "message": "Lista de atividades retornada",
+  "pagination": {
+    "page": "number",
+    "limit": "number",
+    "total": "number"
   }
-]
+}
 ```
 
 **Status Codes:**
@@ -640,14 +940,24 @@ Listar todas as atividades.
 
 Obter detalhes de uma atividade específica.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/assignments/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "title": "string",
-  "description": "string",
-  "courseId": "number",
-  "createdAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "title": "string",
+    "description": "string",
+    "courseId": "number",
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "message": "Atividade encontrada"
 }
 ```
 
@@ -662,6 +972,12 @@ Obter detalhes de uma atividade específica.
 
 Criar nova atividade.
 
+**Request:**
+- **Method:** POST
+- **Path:** `/assignments`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -671,14 +987,18 @@ Criar nova atividade.
 }
 ```
 
-**Response:**
+**Response (201 Created):**
 ```json
 {
-  "id": "number",
-  "title": "string",
-  "description": "string",
-  "courseId": "number",
-  "createdAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "title": "string",
+    "description": "string",
+    "courseId": "number",
+    "createdAt": "string"
+  },
+  "message": "Atividade criada com sucesso"
 }
 ```
 
@@ -693,6 +1013,12 @@ Criar nova atividade.
 
 Atualizar atividade.
 
+**Request:**
+- **Method:** PUT
+- **Path:** `/assignments/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -701,13 +1027,19 @@ Atualizar atividade.
 }
 ```
 
-**Response:**
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "title": "string",
-  "description": "string",
-  "courseId": "number"
+  "success": true,
+  "data": {
+    "id": "number",
+    "title": "string",
+    "description": "string",
+    "courseId": "number",
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "message": "Atividade atualizada com sucesso"
 }
 ```
 
@@ -723,9 +1055,15 @@ Atualizar atividade.
 
 Excluir atividade.
 
-**Response:**
+**Request:**
+- **Method:** DELETE
+- **Path:** `/assignments/:id`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
+  "success": true,
   "message": "Atividade excluída com sucesso"
 }
 ```
@@ -741,17 +1079,32 @@ Excluir atividade.
 
 Listar entregas de uma atividade.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/assignments/:id/submissions`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Query:** `?page=1&limit=10` (opcional)
+
+**Response (200 OK):**
 ```json
-[
-  {
-    "id": "number",
-    "assignmentId": "number",
-    "studentId": "number",
-    "content": "string",
-    "submittedAt": "string"
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "assignmentId": "number",
+      "studentId": "number",
+      "content": "string",
+      "submittedAt": "string"
+    }
+  ],
+  "message": "Lista de entregas retornada",
+  "pagination": {
+    "page": "number",
+    "limit": "number",
+    "total": "number"
   }
-]
+}
 ```
 
 **Status Codes:**
@@ -765,14 +1118,23 @@ Listar entregas de uma atividade.
 
 Obter detalhes de uma entrega específica.
 
-**Response:**
+**Request:**
+- **Method:** GET
+- **Path:** `/assignments/:id/submissions/:submissionId`
+- **Header:** Authorization: Bearer <TOKEN>
+
+**Response (200 OK):**
 ```json
 {
-  "id": "number",
-  "assignmentId": "number",
-  "studentId": "number",
-  "content": "string",
-  "submittedAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "assignmentId": "number",
+    "studentId": "number",
+    "content": "string",
+    "submittedAt": "string"
+  },
+  "message": "Entrega encontrada"
 }
 ```
 
@@ -787,6 +1149,12 @@ Obter detalhes de uma entrega específica.
 
 Entregar atividade.
 
+**Request:**
+- **Method:** POST
+- **Path:** `/assignments/:id/submissions`
+- **Header:** Authorization: Bearer <TOKEN>
+- **Content-Type:** application/json
+
 **Body:**
 ```json
 {
@@ -794,14 +1162,18 @@ Entregar atividade.
 }
 ```
 
-**Response:**
+**Response (201 Created):**
 ```json
 {
-  "id": "number",
-  "assignmentId": "number",
-  "studentId": "number",
-  "content": "string",
-  "submittedAt": "string"
+  "success": true,
+  "data": {
+    "id": "number",
+    "assignmentId": "number",
+    "studentId": "number",
+    "content": "string",
+    "submittedAt": "string"
+  },
+  "message": "Entrega realizada com sucesso"
 }
 ```
 
@@ -813,22 +1185,14 @@ Entregar atividade.
 
 ---
 
-## Informações Adicionais
-
-### Base URL
-
-```
-http://localhost:3001
-```
-
-### Headers Comuns
+## Headers Comuns
 
 | Header | Valor | Obrigatório |
 |--------|-------|-------------|
-| Content-Type | application/json | Sim |
+| Content-Type | application/json | Sim (para POST/PUT/PATCH) |
 | Authorization | Bearer <TOKEN> | Apenas endpoints protegidos |
 
-### Timestamp Format
+## Timestamp Format
 
 Todos os timestamps retornados no formato ISO 8601:
 
@@ -836,21 +1200,21 @@ Todos os timestamps retornados no formato ISO 8601:
 "2026-03-28T12:34:56.789Z"
 ```
 
-### Paginação
+## Paginação
 
 Os endpoints de listagem suportam parâmetros de paginação:
 
 | Parâmetro | Tipo | Descrição |
 |-----------|------|-----------|
-| limit | number | Limite de itens por página (padrão: 10) |
 | page | number | Página desejada (padrão: 1) |
+| limit | number | Limite de itens por página (padrão: 10) |
 
 **Exemplo:**
 ```
 GET /courses?page=2&limit=5
 ```
 
-### Filtragem
+## Filtragem
 
 Alguns endpoints suportam filtros via query parameters:
 
@@ -867,6 +1231,8 @@ GET /students?courseId=1
 
 ## Conclusão
 
-Esta API v1 oferece endpoints RESTful para gerenciamento completo de uma plataforma de ensino por IA, incluindo autenticação, usuários, cursos, estudantes, atividades e entregas.
+Esta API v1 oferece endpoints RESTful completos para gerenciamento de uma plataforma de ensino por IA, incluindo autenticação JWT, usuários, cursos, estudantes, atividades e entregas.
 
-Para mais informações, consulte a documentação principal em [API_DOCS.md](./API_DOCS.md).
+**Documentação criada conforme:** KAN-33 - Documentação de API
+
+Para mais informações, consulte [API_DOCS.md](./API_DOCS.md).

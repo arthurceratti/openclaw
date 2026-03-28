@@ -7,16 +7,16 @@
   "agentState": {
     "current_agent": "none",
     "status": "idle",
-    "last_execution_time": "2026-03-27T14:29:27Z",
+    "last_execution_time": "2026-03-27T17:22:00Z",
     "gpu_locked": false,
     "timeout_minutes": 5,
     "min_interval_minutes": 90
   },
   "agentTasks": {
     "severino": {
-      "task": "Configurar ambiente de produção para frontend e backend (KAN-20)",
-      "sessionKey": "agent:severino:subagent:6350dcf5-0e66-4952-84fb-4c2cf83b8d63",
-      "status": "completed"
+      "task": "Criar testes E2E para backend (KAN-31)",
+      "sessionKey": "agent:severino:subagent:pending",
+      "status": "pending"
     }
   }
 }
